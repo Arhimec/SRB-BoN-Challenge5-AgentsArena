@@ -1,0 +1,12 @@
+[
+  { "id": "agent-1", "address": "erd1...", "privateKey": "HEX_KEY_1", "feeLimitEgld": 50, "batchSize": 80 },
+  { "id": "agent-2", "address": "erd1...", "privateKey": "HEX_KEY_2", "feeLimitEgld": 50, "batchSize": 80 },
+  { "id": "agent-3", "address": "erd1...", "privateKey": "HEX_KEY_3", "feeLimitEgld": 50, "batchSize": 80 },
+  { "id": "agent-4", "address": "erd1...", "privateKey": "HEX_KEY_4", "feeLimitEgld": 50, "batchSize": 80 },
+  { "id": "agent-5", "address": "erd1...", "privateKey": "HEX_KEY_5", "feeLimitEgld": 50, "batchSize": 80 },
+  { "id": "agent-6", "address": "erd1...", "privateKey": "HEX_KEY_6", "feeLimitEgld": 50, "batchSize": 80 },
+  { "id": "agent-7", "address": "erd1...", "privateKey": "HEX_KEY_7", "feeLimitEgld": 50, "batchSize": 80 },
+  { "id": "agent-8", "address": "erd1...", "privateKey": "HEX_KEY_8", "feeLimitEgld": 50, "batchSize": 80 },
+  { "id": "agent-9", "address": "erd1...", "privateKey": "HEX_KEY_9", "feeLimitEgld": 50, "batchSize": 80 },
+  { "id": "agent-10", "address": "erd1...", "privateKey": "HEX_KEY_10", "feeLimitEgld": 50, "batchSize": 80 }
+]
