@@ -50,7 +50,7 @@ export function txLoopFactory(cfg: TxEngineConfig) {
           log(`[${cfg.id}] ${confirmed} txs confirmed on-chain`);
         }
       }
-    }, 2000) : null;
+    }, 500) : null;
 
     try {
       while (true) {
@@ -81,7 +81,7 @@ export function txLoopFactory(cfg: TxEngineConfig) {
         if (nonces.length === 0) {
           // Mempool full — resync and wait
           await nonceManager?.resync();
-          await sleep(100);
+          await sleep(20);
           continue;
         }
 
@@ -106,7 +106,7 @@ export function txLoopFactory(cfg: TxEngineConfig) {
 
         // ── Phase 3: Send ──
         try {
-          const result = await sendBatchParallel(BON_GATEWAY_API, txs, 2);
+          const result = await sendBatchParallel(BON_GATEWAY_API, txs, 10);
           const fee = result.accepted * MOVBALANCE_FEE;
           agentFeeSpent += fee;
           addGuildFee(fee);

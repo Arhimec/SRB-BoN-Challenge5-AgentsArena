@@ -1,71 +1,56 @@
 import fetch from 'node-fetch';
-import { BON_EXPLORER_API, ADMIN_ADDRESS, TARGET_ADDRESS, SIMULATION_MODE } from './config';
+import { BON_EXPLORER_API, ADMIN_ADDRESS, TARGET_ADDRESS } from './config';
 import { log } from './logger';
 
-// C4 FIX: txHash-based dedup instead of timestamp (same-block commands were missed)
 const seenHashes = new Set<string>();
 const MAX_SEEN = 2000;
 
 export interface AdminCommand {
-  txHash: string;
-  timestamp: number;
   message: string;
+  txHash: string;
 }
 
+/**
+ * High-Accuracy Polling Listener:
+ * 1. Polls bon-api.multiversx.com for Admin's transactions.
+ * 2. Filters for txs where Receiver === TARGET_ADDRESS.
+ * 3. Decodes data (Base64) to get the raw message.
+ */
 export async function pollAdminCommands(): Promise<AdminCommand[]> {
-  // If in simulation mode or addresses are not set, return empty (or could return mock commands)
-  if (SIMULATION_MODE || ADMIN_ADDRESS.includes('...') || TARGET_ADDRESS.includes('...')) {
-    return []; 
-  }
-
-  const url = `${BON_EXPLORER_API}/accounts/${TARGET_ADDRESS}/transactions?size=50&sort=desc`;
-  let res: any;
   try {
-    res = await fetch(url);
+    const res = await fetch(`${BON_EXPLORER_API}/accounts/${ADMIN_ADDRESS}/transactions?size=5`);
+    if (!res.ok) return [];
+
+    const txs: any = await res.json();
+    if (!Array.isArray(txs)) return [];
+
+    const newCommands: AdminCommand[] = [];
+
+    // Filter for Admin -> Target transactions
+    const relevantTxs = txs.filter(tx => 
+      tx.receiver === TARGET_ADDRESS && 
+      !seenHashes.has(tx.txHash)
+    );
+
+    for (const tx of relevantTxs) {
+      seenHashes.add(tx.txHash);
+      if (seenHashes.size > MAX_SEEN) {
+        const first = seenHashes.values().next().value;
+        if (first) seenHashes.delete(first);
+      }
+
+      if (!tx.data) continue;
+      
+      // Decode Base64 data
+      const rawMessage = Buffer.from(tx.data, 'base64').toString();
+      log(`[listener] Found Admin -> Target command: "${rawMessage}"`);
+      
+      newCommands.push({ message: rawMessage, txHash: tx.txHash });
+    }
+
+    return newCommands;
   } catch (err: any) {
-    log('[listener] fetch error:', err.message);
+    // Silent ignore for API noise
     return [];
   }
-
-  if (!res.ok) {
-    log('[listener] HTTP error:', res.status);
-    return [];
-  }
-
-  let txs: any[];
-  try {
-    txs = await res.json();
-  } catch {
-    log('[listener] JSON parse error');
-    return [];
-  }
-
-  if (!Array.isArray(txs)) return [];
-
-  const cmds: AdminCommand[] = [];
-
-  for (const tx of txs) {
-    // H5 FIX: Filter BOTH sender AND receiver
-    if (tx.sender !== ADMIN_ADDRESS) continue;
-    if (tx.receiver !== TARGET_ADDRESS) continue;
-
-    // C4 FIX: txHash-based dedup (not timestamp)
-    if (seenHashes.has(tx.txHash)) continue;
-    seenHashes.add(tx.txHash);
-
-    const msg = tx.data ? Buffer.from(tx.data, 'base64').toString('utf8') : '';
-    if (!msg.trim()) continue; // skip empty data txs
-
-    cmds.push({ txHash: tx.txHash, timestamp: tx.timestamp, message: msg });
-  }
-
-  // Trim seen set to prevent unbounded growth
-  if (seenHashes.size > MAX_SEEN) {
-    const arr = Array.from(seenHashes);
-    seenHashes.clear();
-    for (const h of arr.slice(-1000)) seenHashes.add(h);
-  }
-
-  // Return in chronological order (oldest first)
-  return cmds.reverse();
 }

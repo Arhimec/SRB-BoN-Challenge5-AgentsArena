@@ -1,14 +1,10 @@
-import { Address, Transaction, TransactionComputer } from '@multiversx/sdk-core';
-import { UserSigner } from '@multiversx/sdk-wallet';
+import { UserSigner, UserSecretKey } from "@multiversx/sdk-wallet";
+import { Address, Transaction, TransactionComputer } from "@multiversx/sdk-core";
 import { BON_GATEWAY_API, TARGET_ADDRESS } from './config';
 import { loadBonNetworkConfig } from './bonNetwork';
 import { log } from './logger';
 
 const txComputer = new TransactionComputer();
-
-function buildPem(privateKeyHex: string, address: string): string {
-  return `-----BEGIN PRIVATE KEY for ${address}-----\n${Buffer.from(privateKeyHex, 'hex').toString('base64')}\n-----END PRIVATE KEY for ${address}-----`;
-}
 
 export async function buildAndSignBatch(
   privateKeyHex: string,
@@ -19,8 +15,11 @@ export async function buildAndSignBatch(
   const cfg = await loadBonNetworkConfig();
   const sender = Address.newFromBech32(senderBech32);
   const receiver = Address.newFromBech32(TARGET_ADDRESS);
-  const signer = UserSigner.fromPem(buildPem(privateKeyHex, senderBech32));
+  
+  const secretKey = new UserSecretKey(Buffer.from(privateKeyHex, 'hex'));
+  const signer = new UserSigner(secretKey);
   const dataBytes = data ? Buffer.from(data) : Buffer.alloc(0);
+
 
   const txs: any[] = [];
   for (const nonce of nonces) {
@@ -55,8 +54,11 @@ export async function sendSingleTx(
   const cfg = await loadBonNetworkConfig();
   const sender = Address.newFromBech32(senderBech32);
   const receiver = Address.newFromBech32(receiverBech32);
-  const signer = UserSigner.fromPem(buildPem(privateKeyHex, senderBech32));
+
+  const secretKey = new UserSecretKey(Buffer.from(privateKeyHex, 'hex'));
+  const signer = new UserSigner(secretKey);
   const dataBytes = data ? Buffer.from(data) : Buffer.alloc(0);
+
 
   let txNonce = nonce;
   if (txNonce === undefined) {

@@ -18,11 +18,12 @@ export async function loadBonNetworkConfig(): Promise<BonNetworkConfig> {
   const body: any = await res.json();
   const cfg = body.data?.config || body.data || body;
   cachedConfig = {
-    chainID: cfg.ChainID || cfg.chainID || 'D',
-    minGasPrice: Number(cfg.MinGasPrice || cfg.minGasPrice || 1000000000),
-    gasPerDataByte: Number(cfg.GasPerDataByte || cfg.gasPerDataByte || 1500),
-    defaultGasLimit: Number(cfg.MinGasLimit || cfg.minGasLimit || 50000),
+    chainID: cfg.erd_chain_id || cfg.ChainID || cfg.chainID || 'D',
+    minGasPrice: Number(cfg.erd_min_gas_price || cfg.MinGasPrice || cfg.minGasPrice || 1000000000),
+    gasPerDataByte: Number(cfg.erd_gas_per_data_byte || cfg.GasPerDataByte || cfg.gasPerDataByte || 1500),
+    defaultGasLimit: Number(cfg.erd_min_gas_limit || cfg.MinGasLimit || cfg.minGasLimit || 50000),
   };
+
   log('[BoN] loaded network config:', cachedConfig);
   return cachedConfig;
 }

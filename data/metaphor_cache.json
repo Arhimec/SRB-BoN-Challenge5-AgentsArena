@@ -1,0 +1,18 @@
+{
+  "the metronome clicks. begin the first measure.": "GREEN",
+  "the pride spots prey on the savanna. the chase is on.": "GREEN",
+  "the filmmaker yells cut. something went wrong. reset.": "RED",
+  "the chameleon holds perfectly still on the branch.": "RED",
+  "the thermometer reads dangerously high. fever is raging.": "RED",
+  "comms have been compromised. radio silence until further notice.": "RED",
+  "the record skips. lift the needle.": "RED",
+  "the weather vane snaps off in the gale. direction is unknown.": "RED",
+  "the circuit breaker has tripped. do not reset without inspection.": "RED",
+  "uv index is moderate. outdoor activities are advisable.": "GREEN",
+  "open.": "GREEN",
+  "launch.": "GREEN",
+  "go.": "GREEN",
+  "the worker ants detect sugar. the colony mobilizes.": "GREEN",
+  "the magna carta is signed—exercise your rights.": "GREEN",
+  "the crossing gates are lowering. a train approaches.": "RED"
+}

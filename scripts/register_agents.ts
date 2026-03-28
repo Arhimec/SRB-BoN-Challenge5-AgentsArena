@@ -31,25 +31,30 @@ async function main() {
   const cfgPath = path.join(__dirname, '../config/agents.json');
   const agents = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
 
-  log(`Registering ${agents.length} agents with registry: ${REGISTRY_CONTRACT.slice(0, 30)}...`);
-
-  for (const agent of agents) {
+  for (let i = 0; i < agents.length; i++) {
+    const agent = agents[i];
     try {
       log(`  Registering ${agent.id} (${agent.address.slice(0, 20)}...)...`);
 
-      // MX-8004 registration — the exact endpoint name may vary.
-      // Common patterns from openclaw-template:
-      //   - "registerAgent" (SC call with no args)
-      //   - "register" (SC call)
-      // Gas limit needs to be higher for SC calls (~5M)
+      // 1. Hex encode arguments for register_agent@name@uri@pubkey@00@00
+      const nameHex = Buffer.from(agent.id).toString('hex');
+      const uriHex = Buffer.from(`https://agent.molt.bot/${agent.id}`).toString('hex');
+      
+      // Get 32-byte public key hex from Bech32 address
+      const { Address } = require("@multiversx/sdk-core");
+      const pubKeyHex = Address.newFromBech32(agent.address).getPublicKey().toString('hex');
+      
+      // Data format: register_agent@hexname@hexuri@hexpubkey@00@00
+      const data = `register_agent@${nameHex}@${uriHex}@${pubKeyHex}@00@00`;
+
       const txHash = await sendSingleTx(
         agent.privateKey,
         agent.address,
         REGISTRY_CONTRACT,
         '0',
-        'registerAgent', // data field — adjust if registry uses different endpoint
-        undefined,       // nonce — auto-fetch
-        5_000_000        // gasLimit for SC call
+        data,
+        undefined,
+        20_000_000 // HIGHER GAS FOR NFT MINT
       );
 
       log(`  ✓ ${agent.id} registered: ${txHash}`);

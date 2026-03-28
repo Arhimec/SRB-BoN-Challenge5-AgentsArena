@@ -4,69 +4,69 @@
     "address": "erd1q56s3qks4t5tn7sqv8xketrepp0cuwf2pu64m7zww8dgw3ccstmss0seef",
     "privateKey": "39bcdab74cda34c1176945d73c58f18a1d9caaf243dd15fa876096a4e5cc897e",
     "feeLimitEgld": 50,
-    "batchSize": 80
+    "batchSize": 200
   },
   {
     "id": "agent-2",
     "address": "erd1fzlp2d75yc9nh8x37pz6vn2pn9t6zjt6tjus4elyx4yqywp5wtssumtslg",
     "privateKey": "38520c1f272045f6e7d262f9bf3121bb791f4d293f40a2629b89b1866554483b",
     "feeLimitEgld": 50,
-    "batchSize": 80
+    "batchSize": 200
   },
   {
     "id": "agent-3",
     "address": "erd1hut4x73hnpkwrddw39s9suukk7c7x2jfwvd45emhsl34zzgjksgsm3z95m",
     "privateKey": "61095a6758085920e0a315881243718ec952844d414cb5e0fa0f23f6b9af6d6b",
     "feeLimitEgld": 50,
-    "batchSize": 80
+    "batchSize": 200
   },
   {
     "id": "agent-4",
     "address": "erd1hdvjlry0h4x5uvccrksl97w5z5xmkfn45rf2cneg8zj8wers6nlsmhja33",
     "privateKey": "bc5c72e1741f561379f8f519b9d1a31a4d7fc410351a74f908ad142966bdbf70",
     "feeLimitEgld": 50,
-    "batchSize": 80
+    "batchSize": 200
   },
   {
     "id": "agent-5",
     "address": "erd1rlm3aa6j8d2zrchc8ufaqm2ma9805wwk82hq567kns9rch55kkas6lvlnq",
     "privateKey": "1bb434b201cc9109fc9b0d5c0596103fa61a6e278d63db7892b64b122e1e9fb6",
     "feeLimitEgld": 50,
-    "batchSize": 80
+    "batchSize": 200
   },
   {
     "id": "agent-6",
     "address": "erd1crdq6x8yygfjw39s47d5pse4v4vwklzgnm9dj32hf7t6d86k9drqemn6ja",
     "privateKey": "b5e96053d7e74d2e1c40651ec2cef6ceb29d1022dbf680c0a6502cf0f86e0d15",
     "feeLimitEgld": 50,
-    "batchSize": 80
+    "batchSize": 200
   },
   {
     "id": "agent-7",
     "address": "erd137whrrl49pldd8uhgje3yxpdjhltgrlh2q3vx5npt9ewkxvmudms6k2yvk",
     "privateKey": "9cf44439e2ac562d81d6616a281183027bdae791f6b5d1632063c6050547548b",
     "feeLimitEgld": 50,
-    "batchSize": 80
+    "batchSize": 200
   },
   {
     "id": "agent-8",
     "address": "erd1d89pksyldr3nce79c5sccl8ne6k43pprkep6h6yv92yp7s38egzs4rw7q9",
     "privateKey": "a2c62b838edf907a69317d32506f5546b0a4a66c3544a3d82f34d33c33e8e5cf",
     "feeLimitEgld": 50,
-    "batchSize": 80
+    "batchSize": 200
   },
   {
     "id": "agent-9",
     "address": "erd1mkdch9z4e4s0649ks9jurxqrlwxgr7cwxzhpfwfcxewdrq5lx4yqcu4ug4",
     "privateKey": "738430ea559b77565780a43f709b4596df77bf8582e5d30d963c9c5e5274ebf2",
     "feeLimitEgld": 50,
-    "batchSize": 80
+    "batchSize": 200
   },
   {
     "id": "agent-10",
     "address": "erd1nv7kupss89evxh6l673dt6zc3wmk5hu9mm57yuxuttz0jmdncgkqlq5qun",
     "privateKey": "042c766b51f53769c32dc5ea8adc9b5d93864c01fb399cbb5b7a6bac904ec5c6",
     "feeLimitEgld": 50,
-    "batchSize": 80
+    "batchSize": 200
   }
 ]
